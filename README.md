@@ -1,0 +1,1 @@
+# GyongyosiDora_SzamitogepiGrafika
