@@ -56,9 +56,8 @@ Az `F1` billentyű megnyomására egy képernyőre rajzolt súgó (overlay) jele
 
 ## Technológia
 - C programozási nyelv
-- OpenGL
-- GLFW
-- GLAD
+- OpenGL (fixed pipeline)
+- SDL2
 - stb_image
 
 ## Fordítás
