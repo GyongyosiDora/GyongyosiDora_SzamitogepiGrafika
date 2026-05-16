@@ -35,6 +35,11 @@ int init_app(App* app)
 
     app->is_running = true;
 
+    app->key_w = false;
+    app->key_a = false;
+    app->key_s = false;
+    app->key_d = false;
+
     return 1;
 }
 
@@ -47,9 +52,44 @@ void handle_app_events(App* app)
             app->is_running = false;
         }
 
-        if (event.type == SDL_KEYDOWN &&
-            event.key.keysym.sym == SDLK_ESCAPE) {
-            app->is_running = false;
+        if (event.type == SDL_KEYDOWN) {
+            if (event.key.keysym.sym == SDLK_ESCAPE) {
+                app->is_running = false;
+            }
+
+            if (event.key.keysym.sym == SDLK_w) {
+                app->key_w = true;
+            }
+
+            if (event.key.keysym.sym == SDLK_a) {
+                app->key_a = true;
+            }
+
+            if (event.key.keysym.sym == SDLK_s) {
+                app->key_s = true;
+            }
+
+            if (event.key.keysym.sym == SDLK_d) {
+                app->key_d = true;
+            }
+        }
+
+        if (event.type == SDL_KEYUP) {
+            if (event.key.keysym.sym == SDLK_w) {
+                app->key_w = false;
+            }
+
+            if (event.key.keysym.sym == SDLK_a) {
+                app->key_a = false;
+            }
+
+            if (event.key.keysym.sym == SDLK_s) {
+                app->key_s = false;
+            }
+
+            if (event.key.keysym.sym == SDLK_d) {
+                app->key_d = false;
+            }
         }
     }
 }

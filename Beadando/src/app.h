@@ -11,6 +11,11 @@ typedef struct App {
     SDL_Window* window;
     SDL_GLContext context;
     bool is_running;
+
+    bool key_w;
+    bool key_a;
+    bool key_s;
+    bool key_d;
 } App;
 
 int init_app(App* app);

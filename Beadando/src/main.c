@@ -19,6 +19,7 @@ int main(int argc, char* argv[])
 
     while (app.is_running) {
         handle_app_events(&app);
+        update_camera(&camera, &app);
         render_scene(&camera);
         SDL_GL_SwapWindow(app.window);
     }
