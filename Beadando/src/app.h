@@ -16,6 +16,9 @@ typedef struct App {
     bool key_a;
     bool key_s;
     bool key_d;
+
+    float mouse_dx;
+    float mouse_dy;
 } App;
 
 int init_app(App* app);
