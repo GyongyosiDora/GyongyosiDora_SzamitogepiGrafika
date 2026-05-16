@@ -63,7 +63,7 @@ void init_scene(void)
     glClearColor(0.02f, 0.02f, 0.025f, 1.0f);
 }
 
-void render_scene(void)
+void render_scene(const Camera* camera)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

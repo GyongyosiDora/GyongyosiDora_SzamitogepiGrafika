@@ -7,7 +7,7 @@ typedef struct Camera {
     float z;
 } Camera;
 
-coid init_camera(Camera* camera);
+void init_camera(Camera* camera);
 void apply_camera(const Camera* camera);
 
 #endif
