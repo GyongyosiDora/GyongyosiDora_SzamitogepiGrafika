@@ -70,7 +70,8 @@ void render_scene(void)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    glTranslatef(0.0f, 0.0f, -6.0f);
+    apply_camera(camera);
+
     glRotatef(25.0f, 1.0f, 0.0f, 0.0f);
     glRotatef(35.0f, 0.0f, 1.0f, 0.0f);
 

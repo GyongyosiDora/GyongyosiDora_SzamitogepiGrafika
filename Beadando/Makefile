@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -std=c99
 LIBS = -lmingw32 -lSDL2main -lSDL2 -lopengl32 -lglu32
 
-SRC = src/main.c src/app.c src/scene.c
+SRC = src/main.c src/app.c src/scene.c src/camera.c
 OUT = haunted_room.exe
 
 all:
