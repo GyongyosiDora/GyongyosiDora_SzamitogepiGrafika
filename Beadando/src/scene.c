@@ -4,45 +4,51 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
-static void draw_cube(void)
+static void draw_room(void)
 {
     glBegin(GL_QUADS);
 
-    glColor3f(0.6f, 0.2f, 0.2f);
-    glVertex3f(-1.0f, -1.0f,  1.0f);
-    glVertex3f( 1.0f, -1.0f,  1.0f);
-    glVertex3f( 1.0f,  1.0f,  1.0f);
-    glVertex3f(-1.0f,  1.0f,  1.0f);
+    // padló
+    glColor3f(0.25f, 0.22f, 0.20f);
+    glVertex3f(-5.0f, -5.0f, 0.0f);
+    glVertex3f( 5.0f, -5.0f, 0.0f);
+    glVertex3f( 5.0f,  5.0f, 0.0f);
+    glVertex3f(-5.0f,  5.0f, 0.0f);
 
-    glColor3f(0.2f, 0.6f, 0.2f);
-    glVertex3f(-1.0f, -1.0f, -1.0f);
-    glVertex3f(-1.0f,  1.0f, -1.0f);
-    glVertex3f( 1.0f,  1.0f, -1.0f);
-    glVertex3f( 1.0f, -1.0f, -1.0f);
+    // plafon
+    glColor3f(0.18f, 0.16f, 0.15f);
+    glVertex3f(-5.0f, -5.0f, 3.0f);
+    glVertex3f(-5.0f,  5.0f, 3.0f);
+    glVertex3f( 5.0f,  5.0f, 3.0f);
+    glVertex3f( 5.0f, -5.0f, 3.0f);
 
-    glColor3f(0.2f, 0.2f, 0.6f);
-    glVertex3f(-1.0f,  1.0f, -1.0f);
-    glVertex3f(-1.0f,  1.0f,  1.0f);
-    glVertex3f( 1.0f,  1.0f,  1.0f);
-    glVertex3f( 1.0f,  1.0f, -1.0f);
+    // hátsó fal
+    glColor3f(0.32f, 0.30f, 0.28f);
+    glVertex3f(-5.0f, 5.0f, 0.0f);
+    glVertex3f( 5.0f, 5.0f, 0.0f);
+    glVertex3f( 5.0f, 5.0f, 3.0f);
+    glVertex3f(-5.0f, 5.0f, 3.0f);
 
-    glColor3f(0.6f, 0.6f, 0.2f);
-    glVertex3f(-1.0f, -1.0f, -1.0f);
-    glVertex3f( 1.0f, -1.0f, -1.0f);
-    glVertex3f( 1.0f, -1.0f,  1.0f);
-    glVertex3f(-1.0f, -1.0f,  1.0f);
+    // első fal
+    glColor3f(0.30f, 0.28f, 0.26f);
+    glVertex3f(-5.0f, -5.0f, 0.0f);
+    glVertex3f(-5.0f, -5.0f, 3.0f);
+    glVertex3f( 5.0f, -5.0f, 3.0f);
+    glVertex3f( 5.0f, -5.0f, 0.0f);
 
-    glColor3f(0.6f, 0.2f, 0.6f);
-    glVertex3f(1.0f, -1.0f, -1.0f);
-    glVertex3f(1.0f,  1.0f, -1.0f);
-    glVertex3f(1.0f,  1.0f,  1.0f);
-    glVertex3f(1.0f, -1.0f,  1.0f);
+    // bal fal
+    glColor3f(0.28f, 0.26f, 0.24f);
+    glVertex3f(-5.0f, -5.0f, 0.0f);
+    glVertex3f(-5.0f,  5.0f, 0.0f);
+    glVertex3f(-5.0f,  5.0f, 3.0f);
+    glVertex3f(-5.0f, -5.0f, 3.0f);
 
-    glColor3f(0.2f, 0.6f, 0.6f);
-    glVertex3f(-1.0f, -1.0f, -1.0f);
-    glVertex3f(-1.0f, -1.0f,  1.0f);
-    glVertex3f(-1.0f,  1.0f,  1.0f);
-    glVertex3f(-1.0f,  1.0f, -1.0f);
+    // jobb fal
+    glColor3f(0.28f, 0.26f, 0.24f);
+    glVertex3f(5.0f, -5.0f, 0.0f);
+    glVertex3f(5.0f, -5.0f, 3.0f);
+    glVertex3f(5.0f,  5.0f, 3.0f);
+    glVertex3f(5.0f,  5.0f, 0.0f);
 
     glEnd();
 }
@@ -72,8 +78,5 @@ void render_scene(const Camera* camera)
 
     apply_camera(camera);
 
-    glRotatef(25.0f, 1.0f, 0.0f, 0.0f);
-    glRotatef(35.0f, 0.0f, 1.0f, 0.0f);
-
-    draw_cube();
+    draw_room();
 }
