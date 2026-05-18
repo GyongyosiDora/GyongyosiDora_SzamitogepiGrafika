@@ -1,5 +1,5 @@
 #include "camera.h"
-#include <GL/gl.h>
+#include <GL/glu.h>
 #include <math.h>
 
 #define DEG_TO_RAD 0.01745329251f
@@ -13,15 +13,31 @@ void init_camera(Camera* camera) {
     camera->vertical_angle = 0.0f;
 }
 
-void apply_camera(const Camera*camera) {
-    glRotatef(-camera->vertical_angle, 1.0f, 0.0f, 0.0f);
-    glRotatef(-camera->horizontal_angle + 90.0f, 0.0f, 0.0f, 1.0f);
-    
-    glTranslatef(-camera->x, -camera->y, -camera->z);
+void apply_camera(const Camera* camera) {
+    float horizontal = camera->horizontal_angle * DEG_TO_RAD;
+    float vertical = camera->vertical_angle * DEG_TO_RAD;
+
+    float look_x = cosf(vertical) * cosf(horizontal);
+    float look_y = cosf(vertical) * sinf(horizontal);
+    float look_z = sinf(vertical);
+
+    gluLookAt(
+        camera->x,
+        camera->y,
+        camera->z,
+
+        camera->x + look_x,
+        camera->y + look_y,
+        camera->z + look_z,
+
+        0.0f,
+        0.0f,
+        1.0f
+    );
 }
 
 void update_camera(Camera* camera, const App* app) {
-    const float speed = 0.05f;
+    const float speed = 0.005f;
 
     float angle = camera->horizontal_angle * DEG_TO_RAD;
 
@@ -49,6 +65,22 @@ void update_camera(Camera* camera, const App* app) {
         camera->x += right_x * speed;
         camera->y += right_y * speed;
     }
+
+    if (camera->x < -4.7f) {
+        camera->x = -4.7f;
+    }
+
+    if (camera->x > 4.7f) {
+        camera->x = 4.7f;
+    }
+
+    if (camera->y < -4.7f) {
+        camera->y = -4.7f;
+    }
+
+    if (camera->y > 4.7f) {
+        camera->y = 4.7f;
+    }
 }
 
 void rotate_camera(Camera* camera, float mouse_dx, float mouse_dy) {
@@ -57,11 +89,11 @@ void rotate_camera(Camera* camera, float mouse_dx, float mouse_dy) {
     camera->horizontal_angle -= mouse_dx * sensitivity;
     camera->vertical_angle -= mouse_dy * sensitivity;
 
-    if (camera->vertical_angle > 89.0f) {
-        camera->vertical_angle = 89.0f;
+    if (camera->vertical_angle > 80.0f) {
+        camera->vertical_angle = 80.0f;
     }
 
-    if (camera->vertical_angle < -89.0f) {
-        camera->vertical_angle = -89.0f;
+    if (camera->vertical_angle < -80.0f) {
+        camera->vertical_angle = -80.0f;
     }
 }

@@ -9,7 +9,7 @@ static void draw_room(void)
     glBegin(GL_QUADS);
 
     // padló
-    glColor3f(0.25f, 0.22f, 0.20f);
+    glColor3f(0.13f, 0.13f, 0.13f);
     glVertex3f(-5.0f, -5.0f, 0.0f);
     glVertex3f( 5.0f, -5.0f, 0.0f);
     glVertex3f( 5.0f,  5.0f, 0.0f);
