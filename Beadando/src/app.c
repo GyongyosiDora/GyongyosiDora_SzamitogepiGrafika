@@ -43,6 +43,9 @@ int init_app(App* app)
     app->mouse_dx = 0.0f;
     app->mouse_dy = 0.0f;
 
+    app->key_plus = false;
+    app->key_minus = false;
+
     SDL_SetRelativeMouseMode(SDL_TRUE);
 
     return 1;
@@ -80,6 +83,14 @@ void handle_app_events(App* app)
             if (event.key.keysym.sym == SDLK_d) {
                 app->key_d = true;
             }
+
+            if (event.key.keysym.sym == SDLK_PLUS || event.key.keysym.sym == SDLK_KP_PLUS) {
+                app->key_plus = true;
+            }
+
+            if (event.key.keysym.sym == SDLK_MINUS || event.key.keysym.sym == SDLK_KP_MINUS) {
+                app->key_minus = true;
+            }
         }
 
         if (event.type == SDL_KEYUP) {
@@ -97,6 +108,14 @@ void handle_app_events(App* app)
 
             if (event.key.keysym.sym == SDLK_d) {
                 app->key_d = false;
+            }
+
+            if (event.key.keysym.sym == SDLK_PLUS || event.key.keysym.sym == SDLK_KP_PLUS) {
+                app->key_plus = false;
+            }
+
+            if (event.key.keysym.sym == SDLK_MINUS || event.key.keysym.sym == SDLK_KP_MINUS) {
+                app->key_minus = false;
             }
         }
 
