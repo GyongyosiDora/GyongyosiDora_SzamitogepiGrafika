@@ -1,8 +1,8 @@
 #include "scene.h"
 #include "app.h"
+#include "light.h"
 
 #include <GL/gl.h>
-#include <GL/glu.h>
 
 static void draw_room(void)
 {
@@ -117,7 +117,17 @@ void init_scene(void)
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(70.0, (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT, 0.1, 100.0);
+
+    double aspect = (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT;
+
+    double near_plane = 0.1;
+    double far_plane = 100.0;
+    double top = 0.07;
+    double bottom = -top;
+    double right = top * aspect;
+    double left = -right;
+
+    glFrustum(left, right, bottom, top, near_plane, far_plane);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
