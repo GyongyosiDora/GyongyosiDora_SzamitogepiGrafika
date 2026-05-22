@@ -5,7 +5,9 @@
 #include "camera.h"
 
 typedef struct Light {
-    float intensity;
+    float intensity;          // amit +/- állít
+    float current_intensity; // villogó érték
+    float time;              // idő a villogáshoz
 } Light;
 
 void init_light(Light* light);

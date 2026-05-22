@@ -55,9 +55,9 @@ void render_scene(const Scene* scene, const Camera* camera, const Light* light) 
     GLfloat light_pos[] = {1.1f, -0.45f, -1.2f, 1.0f};
 
     GLfloat diffuse[] = {
-        1.0f * light->intensity,
-        0.65f * light->intensity,
-        0.35f * light->intensity,
+        1.0f * light->current_intensity,
+        0.65f * light->current_intensity,
+        0.35f * light->current_intensity,
         1.0f
     };
 
