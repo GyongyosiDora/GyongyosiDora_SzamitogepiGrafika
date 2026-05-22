@@ -1,4 +1,4 @@
-#include "room.h"
+#include "draw.h"
 #include <GL/gl.h>
 
 void draw_room(void) {
@@ -102,6 +102,20 @@ void draw_test_box(void) {
     glVertex3f(-1.0f,  1.0f, -1.0f);
 
     glEnd();
+
+    glPopMatrix();
+}
+
+// fáklya
+void draw_torch_model(const Model* model) {
+    glPushMatrix();
+
+    glTranslatef(0.0f, -1.5f, 1.0f);
+    glScalef(0.3f, 0.3f, 0.3f);
+
+    glColor3f(0.7f, 0.35f, 0.1f);
+
+    draw_model(model);
 
     glPopMatrix();
 }

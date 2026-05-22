@@ -3,8 +3,14 @@
 
 #include "camera.h"
 #include "light.h"
+#include "model.h"
 
-void init_scene(void);
-void render_scene(const Camera* camera, const Light* light);
+typedef struct Scene {
+    Model torch;
+} Scene;
+
+int init_scene(Scene* scene);
+void render_scene(const Scene* scene, const Camera* camera, const Light* light);
+void destroy_scene(Scene* scene);
 
 #endif

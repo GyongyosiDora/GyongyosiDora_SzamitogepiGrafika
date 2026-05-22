@@ -1,3 +1,70 @@
-# Blender v2.93.5 OBJ File: 'touch.blend'
-# www.blender.org
-mtllib touch.mtl
+# Simple low-poly torch model for Haunted Room
+# Compatible with simple OBJ loaders using v and f lines only
+
+# handle vertices - rectangular wooden handle
+v -0.08 -0.08 -0.70
+v  0.08 -0.08 -0.70
+v  0.08  0.08 -0.70
+v -0.08  0.08 -0.70
+
+v -0.08 -0.08  0.35
+v  0.08 -0.08  0.35
+v  0.08  0.08  0.35
+v -0.08  0.08  0.35
+
+# metal holder / torch head
+v -0.16 -0.16  0.35
+v  0.16 -0.16  0.35
+v  0.16  0.16  0.35
+v -0.16  0.16  0.35
+
+v -0.14 -0.14  0.55
+v  0.14 -0.14  0.55
+v  0.14  0.14  0.55
+v -0.14  0.14  0.55
+
+# flame vertices - simple diamond flame
+v  0.00  0.00  1.05
+v -0.18  0.00  0.55
+v  0.18  0.00  0.55
+v  0.00 -0.18  0.55
+v  0.00  0.18  0.55
+v  0.00  0.00  0.38
+
+# handle faces
+f 1 2 6
+f 1 6 5
+f 2 3 7
+f 2 7 6
+f 3 4 8
+f 3 8 7
+f 4 1 5
+f 4 5 8
+f 5 6 7
+f 5 7 8
+f 1 4 3
+f 1 3 2
+
+# head faces
+f 9 10 14
+f 9 14 13
+f 10 11 15
+f 10 15 14
+f 11 12 16
+f 11 16 15
+f 12 9 13
+f 12 13 16
+f 13 14 15
+f 13 15 16
+f 9 12 11
+f 9 11 10
+
+# flame faces
+f 17 18 20
+f 17 20 19
+f 17 19 21
+f 17 21 18
+f 22 20 18
+f 22 19 20
+f 22 21 19
+f 22 18 21
