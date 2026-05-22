@@ -42,6 +42,9 @@ int init_scene(Scene* scene) {
         return 0;
     }
 
+    scene->chest.is_open   = false;
+    scene->chest.lid_angle = 0.0f;
+
     return 1;
 }
 
@@ -75,7 +78,9 @@ void render_scene(const Scene* scene, const Camera* camera, const Light* light) 
     apply_camera(camera);
 
     draw_room();
-    draw_test_box();
+    //draw_test_box();
+    draw_table();
+    draw_chest(scene->chest.lid_angle);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -97,4 +102,5 @@ void render_scene(const Scene* scene, const Camera* camera, const Light* light) 
 
 void destroy_scene(Scene* scene) {
     destroy_model(&scene->torch);
+    destroy_model(&scene->chest.model);
 }

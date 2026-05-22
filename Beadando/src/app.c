@@ -39,6 +39,7 @@ int init_app(App* app)
     app->key_a = false;
     app->key_s = false;
     app->key_d = false;
+    app->key_e = false;
 
     app->mouse_dx = 0.0f;
     app->mouse_dy = 0.0f;
@@ -84,6 +85,10 @@ void handle_app_events(App* app)
                 app->key_d = true;
             }
 
+            if (event.key.keysym.sym == SDLK_e) {
+                app->key_e = true;
+            }
+
             if (event.key.keysym.sym == SDLK_PLUS || event.key.keysym.sym == SDLK_KP_PLUS) {
                 app->key_plus = true;
             }
@@ -108,6 +113,10 @@ void handle_app_events(App* app)
 
             if (event.key.keysym.sym == SDLK_d) {
                 app->key_d = false;
+            }
+
+            if (event.key.keysym.sym == SDLK_e) {
+                app->key_e = false;
             }
 
             if (event.key.keysym.sym == SDLK_PLUS || event.key.keysym.sym == SDLK_KP_PLUS) {

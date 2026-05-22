@@ -4,9 +4,17 @@
 #include "camera.h"
 #include "light.h"
 #include "model.h"
+#include <stdbool.h>
+
+typedef struct {
+    Model model;
+    bool is_open;
+    float lid_angle;
+} Chest;
 
 typedef struct Scene {
     Model torch;
+    Chest chest;
 } Scene;
 
 int init_scene(Scene* scene);
