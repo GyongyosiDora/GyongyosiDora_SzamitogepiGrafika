@@ -51,14 +51,37 @@ void render_scene(const Scene* scene, const Camera* camera, const Light* light) 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
+    // fény a kamera előtt, a fáklya helyéhez igazítva
+    GLfloat light_pos[] = {1.1f, -0.45f, -1.2f, 1.0f};
+
+    GLfloat diffuse[] = {
+        1.0f * light->intensity,
+        0.65f * light->intensity,
+        0.35f * light->intensity,
+        1.0f
+    };
+
+    GLfloat ambient[] = {
+        0.08f,
+        0.06f,
+        0.04f,
+        1.0f
+    };
+
+    glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+
     apply_camera(camera);
-    apply_light(light, camera);
 
     draw_room();
     draw_test_box();
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+
+    glDisable(GL_LIGHTING);
+    glDisable(GL_DEPTH_TEST);
 
     glTranslatef(1.1f, -0.45f, -1.2f);
     glRotatef(270.0f, 1.0f, 0.0f, 0.0f);
@@ -67,6 +90,9 @@ void render_scene(const Scene* scene, const Camera* camera, const Light* light) 
 
     glColor3f(0.3f, 0.15f, 0.07f);
     draw_model(&scene->torch);
+
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
 }
 
 void destroy_scene(Scene* scene) {
