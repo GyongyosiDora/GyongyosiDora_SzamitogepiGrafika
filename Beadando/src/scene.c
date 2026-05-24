@@ -98,7 +98,7 @@ void render_scene(const Scene* scene, const Camera* camera, const Light* light) 
     //draw_test_box();
     draw_table();
     draw_chest(&scene->chest.body, &scene->chest.lid, scene->chest.lid_angle);
-    draw_torch(&scene->torch);
+    draw_torch(&scene->torch, light);
 }
 
 void destroy_scene(Scene* scene) {

@@ -107,7 +107,7 @@ void draw_test_box(void) {
 }
 
 // fáklya
-void draw_torch(const Model* model) {
+void draw_torch(const Model* model, const Light* light) {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
@@ -121,6 +121,42 @@ void draw_torch(const Model* model) {
 
     glColor3f(0.3f, 0.15f, 0.07f);
     draw_model(model);
+
+    // láng a henger tetején
+    glTranslatef(-0.5f, 0.5f, 0.3f);
+    glRotatef(30.0f, 0.0f, 0.0f, 1.0f);
+
+    float s = 0.08f * light->current_intensity;
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    // belső láng - sárga
+    glColor4f(1.0f, 0.85f, 0.1f, 0.95f);
+    glBegin(GL_TRIANGLES);
+    glVertex3f(-s, 0.0f, 0.0f);
+    glVertex3f( s, 0.0f, 0.0f);
+    glVertex3f(0.0f, s * 2.5f, 0.0f);
+
+    glVertex3f(0.0f, 0.0f, -s);
+    glVertex3f(0.0f, 0.0f, s);
+    glVertex3f(0.0f, s * 2.5f, 0.0f);
+    glEnd();
+
+    // külső láng - narancssárga
+    float os = s * 1.6f;
+    glColor4f(1.0f, 0.35f, 0.0f, 0.5f);
+    glBegin(GL_TRIANGLES);
+    glVertex3f(-os, 0.0f, 0.0f);
+    glVertex3f( os, 0.0f, 0.0f);
+    glVertex3f(0.0f, os * 2.0f, 0.0f);
+
+    glVertex3f(0.0f, 0.0f, -os);
+    glVertex3f(0.0f, 0.0f, os);
+    glVertex3f(0.0f, os * 2.0f, 0.0f);
+    glEnd();
+
+    glDisable(GL_BLEND);
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
