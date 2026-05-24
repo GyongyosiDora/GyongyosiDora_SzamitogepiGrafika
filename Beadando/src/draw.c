@@ -107,17 +107,23 @@ void draw_test_box(void) {
 }
 
 // fáklya
-void draw_torch_model(const Model* model) {
-    glPushMatrix();
+void draw_torch(const Model* model) {
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
-    glTranslatef(0.0f, -1.5f, 1.0f);
-    glScalef(0.3f, 0.3f, 0.3f);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_DEPTH_TEST);
 
-    glColor3f(0.7f, 0.35f, 0.1f);
+    glTranslatef(1.1f, -0.45f, -1.2f);
+    glRotatef(0.0f, 1.0f, 0.0f, 0.0f);
+    glRotatef(-10.0f, 0.0f, 0.0f, 1.0f);
+    glScalef(0.5f, 0.5f, 0.5f);
 
+    glColor3f(0.3f, 0.15f, 0.07f);
     draw_model(model);
 
-    glPopMatrix();
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
 }
 
 // asztal

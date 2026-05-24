@@ -37,6 +37,13 @@ int init_scene(Scene* scene) {
 
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
+    // köd beállítás
+    GLfloat fog_color[] = { 0.1f, 0.1f, 0.1f, 1.0f };
+    glEnable(GL_FOG);
+    glFogi(GL_FOG_MODE, GL_EXP2);
+    glFogfv(GL_FOG_COLOR, fog_color);
+    glFogf(GL_FOG_DENSITY, 0.4f);
+
     if (!load_model(&scene->torch, "assets/models/torch.obj")) {
         fprintf(stderr, "Failed to load torch model.\n");
         return 0;
@@ -60,13 +67,6 @@ int init_scene(Scene* scene) {
 
 void render_scene(const Scene* scene, const Camera* camera, const Light* light) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    // köd beállítás
-    GLfloat fog_color[] = { 0.1f, 0.1f, 0.1f, 1.0f };
-    glEnable(GL_FOG);
-    glFogi(GL_FOG_MODE, GL_EXP2);
-    glFogfv(GL_FOG_COLOR, fog_color);
-    glFogf(GL_FOG_DENSITY, 0.4f);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -98,23 +98,7 @@ void render_scene(const Scene* scene, const Camera* camera, const Light* light) 
     //draw_test_box();
     draw_table();
     draw_chest(&scene->chest.body, &scene->chest.lid, scene->chest.lid_angle);
-
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    glDisable(GL_LIGHTING);
-    glDisable(GL_DEPTH_TEST);
-
-    glTranslatef(1.1f, -0.45f, -1.2f);
-    glRotatef(270.0f, 1.0f, 0.0f, 0.0f);
-    glRotatef(-20.0f, 0.0f, 0.0f, 1.0f);
-    glScalef(0.5f, 0.5f, 0.5f);
-
-    glColor3f(0.3f, 0.15f, 0.07f);
-    draw_model(&scene->torch);
-
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_LIGHTING);
+    draw_torch(&scene->torch);
 }
 
 void destroy_scene(Scene* scene) {

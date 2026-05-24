@@ -31,30 +31,3 @@ void update_light(Light* light, const App* app) {
 
     light->current_intensity = light->intensity + flicker;
 }
-
-void apply_light(const Light* light, const Camera* camera) {
-    GLfloat position[] = {
-        camera->x,
-        camera->y,
-        camera->z,
-        1.0f
-    };
-
-    GLfloat diffuse[] = {
-        1.0f * light->intensity,
-        0.65f * light->intensity,
-        0.35f * light->intensity,
-        1.0f
-    };
-
-    GLfloat ambient[] = {
-        0.08f,
-        0.06f,
-        0.04f,
-        1.0f
-    };
-
-    glLightfv(GL_LIGHT0, GL_POSITION, position);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
-    glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
-}
