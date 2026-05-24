@@ -35,7 +35,7 @@ int init_scene(Scene* scene) {
 
     glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 
-    glClearColor(0.02f, 0.02f, 0.025f, 1.0f);
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
     if (!load_model(&scene->torch, "assets/models/torch.obj")) {
         fprintf(stderr, "Failed to load torch model.\n");
@@ -60,6 +60,13 @@ int init_scene(Scene* scene) {
 
 void render_scene(const Scene* scene, const Camera* camera, const Light* light) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // köd beállítás
+    GLfloat fog_color[] = { 0.1f, 0.1f, 0.1f, 1.0f };
+    glEnable(GL_FOG);
+    glFogi(GL_FOG_MODE, GL_EXP2);
+    glFogfv(GL_FOG_COLOR, fog_color);
+    glFogf(GL_FOG_DENSITY, 0.4f);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();

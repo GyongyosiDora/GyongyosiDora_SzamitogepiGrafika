@@ -77,7 +77,7 @@ void apply_camera(const Camera* camera) {
 }
 
 void update_camera(Camera* camera, const App* app) {
-    const float speed = 0.005f;
+    const float speed = 0.002f;
 
     float angle = camera->horizontal_angle * DEG_TO_RAD;
 
