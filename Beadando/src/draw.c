@@ -218,93 +218,24 @@ void draw_table(void)
 }
 
 // láda
-void draw_chest(float lid_angle)
+void draw_chest(const Model* body, const Model* lid, float lid_angle)
 {
-    // alap
     glPushMatrix();
+
     glTranslatef(2.0f, 2.0f, 0.95f);
+    glScalef(0.25f, 0.25f, 0.25f);
+    glRotatef(90.0f, 1.0f, 0.0f, 0.0f);  // OBJ Y-fel → GL Z-fel
 
     glColor3f(0.45f, 0.25f, 0.12f);
+    draw_model(body);
 
-    glBegin(GL_QUADS);
-
-    // aljzat
-    glNormal3f(0.0f, 0.0f, -1.0f);
-    glVertex3f(-0.6f, -0.4f, 0.0f);
-    glVertex3f( 0.6f, -0.4f, 0.0f);
-    glVertex3f( 0.6f,  0.4f, 0.0f);
-    glVertex3f(-0.6f,  0.4f, 0.0f);
-
-    // eleje
-    glNormal3f(0.0f, -1.0f, 0.0f);
-    glVertex3f(-0.6f, -0.4f, 0.0f);
-    glVertex3f(-0.6f, -0.4f, 0.5f);
-    glVertex3f( 0.6f, -0.4f, 0.5f);
-    glVertex3f( 0.6f, -0.4f, 0.0f);
-
-    // hátulja
-    glNormal3f(0.0f, 1.0f, 0.0f);
-    glVertex3f(-0.6f,  0.4f, 0.0f);
-    glVertex3f( 0.6f,  0.4f, 0.0f);
-    glVertex3f( 0.6f,  0.4f, 0.5f);
-    glVertex3f(-0.6f,  0.4f, 0.5f);
-
-    // bal oldal
-    glNormal3f(-1.0f, 0.0f, 0.0f);
-    glVertex3f(-0.6f, -0.4f, 0.0f);
-    glVertex3f(-0.6f,  0.4f, 0.0f);
-    glVertex3f(-0.6f,  0.4f, 0.5f);
-    glVertex3f(-0.6f, -0.4f, 0.5f);
-
-    // jobb oldal
-    glNormal3f(1.0f, 0.0f, 0.0f);
-    glVertex3f( 0.6f, -0.4f, 0.0f);
-    glVertex3f( 0.6f, -0.4f, 0.5f);
-    glVertex3f( 0.6f,  0.4f, 0.5f);
-    glVertex3f( 0.6f,  0.4f, 0.0f);
-
-    glEnd();
-
-    // fedél — a hátsó él körül forog
-    glTranslatef(0.0f, 0.4f, 0.5f);
+    // fedél forgatása a zsanér körül (OBJ Y=1.738 → GL Z=1.738)
+    glTranslatef(0.0f, 1.738f, -1.236f);
     glRotatef(-lid_angle, 1.0f, 0.0f, 0.0f);
-    glTranslatef(0.0f, -0.4f, 0.0f);
+    glTranslatef(0.0f, -1.738f, 1.236f);
 
     glColor3f(0.38f, 0.20f, 0.09f);
-
-    glBegin(GL_QUADS);
-
-    glNormal3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(-0.6f, -0.4f, 0.5f);
-    glVertex3f( 0.6f, -0.4f, 0.5f);
-    glVertex3f( 0.6f,  0.4f, 0.5f);
-    glVertex3f(-0.6f,  0.4f, 0.5f);
-
-    glNormal3f(0.0f, -1.0f, 0.0f);
-    glVertex3f(-0.6f, -0.4f, 0.5f);
-    glVertex3f(-0.6f, -0.4f, 0.58f);
-    glVertex3f( 0.6f, -0.4f, 0.58f);
-    glVertex3f( 0.6f, -0.4f, 0.5f);
-
-    glNormal3f(0.0f, 1.0f, 0.0f);
-    glVertex3f(-0.6f,  0.4f, 0.5f);
-    glVertex3f( 0.6f,  0.4f, 0.5f);
-    glVertex3f( 0.6f,  0.4f, 0.58f);
-    glVertex3f(-0.6f,  0.4f, 0.58f);
-
-    glNormal3f(-1.0f, 0.0f, 0.0f);
-    glVertex3f(-0.6f, -0.4f, 0.5f);
-    glVertex3f(-0.6f, -0.4f, 0.58f);
-    glVertex3f(-0.6f,  0.4f, 0.58f);
-    glVertex3f(-0.6f,  0.4f, 0.5f);
-
-    glNormal3f(1.0f, 0.0f, 0.0f);
-    glVertex3f( 0.6f, -0.4f, 0.5f);
-    glVertex3f( 0.6f,  0.4f, 0.5f);
-    glVertex3f( 0.6f,  0.4f, 0.58f);
-    glVertex3f( 0.6f, -0.4f, 0.58f);
-
-    glEnd();
+    draw_model(lid);
 
     glPopMatrix();
 }

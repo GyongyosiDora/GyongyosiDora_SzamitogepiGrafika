@@ -89,3 +89,48 @@ void destroy_model(Model* model)
     model->vertices = NULL;
     model->vertex_count = 0;
 }
+
+int load_model_named(Model* model, const char* filename, const char* object_name) {
+    FILE* file = fopen(filename, "r");
+    char line[MAX_LINE_LENGTH];
+    Vertex temp_vertices[MAX_VERTICES];
+    int temp_vertex_count = 0;
+    int in_section = 0;
+
+    model->vertices = NULL;
+    model->vertex_count = 0;
+
+    if (file == NULL) {
+        fprintf(stderr, "Cannot open model: %s\n", filename);
+        return 0;
+    }
+
+    while (fgets(line, sizeof(line), file) != NULL) {
+        if (strncmp(line, "o ", 2) == 0) {
+            char name[128];
+            sscanf(line, "o %127s", name);
+            in_section = (strcmp(name, object_name) == 0);
+            continue;
+        }
+
+        if (strncmp(line, "v ", 2) == 0) {
+            sscanf(line, "v %f %f %f",
+                &temp_vertices[temp_vertex_count].x,
+                &temp_vertices[temp_vertex_count].y,
+                &temp_vertices[temp_vertex_count].z);
+            temp_vertex_count++;
+        }
+
+        if (in_section && strncmp(line, "f ", 2) == 0) {
+            int a, b, c;
+            if (sscanf(line, "f %d %d %d", &a, &b, &c) == 3) {
+                add_vertex(model, temp_vertices[a - 1]);
+                add_vertex(model, temp_vertices[b - 1]);
+                add_vertex(model, temp_vertices[c - 1]);
+            }
+        }
+    }
+
+    fclose(file);
+    return 1;
+}

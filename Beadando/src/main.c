@@ -30,6 +30,7 @@ int main(int argc, char* argv[])
         rotate_camera(&camera, app.mouse_dx, app.mouse_dy);
         update_camera(&camera, &app);
         update_light(&light, &app);
+        update_scene(&scene, &app);
         render_scene(&scene, &camera, &light);
         SDL_GL_SwapWindow(app.window);
     }

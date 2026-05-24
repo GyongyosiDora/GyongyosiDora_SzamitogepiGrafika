@@ -45,6 +45,16 @@ int init_scene(Scene* scene) {
     scene->chest.is_open   = false;
     scene->chest.lid_angle = 0.0f;
 
+    if (!load_model_named(&scene->chest.body, "assets/models/chest.obj", "Chest_base")) {
+       fprintf(stderr, "Failed to load chest base.\n");
+       return 0;
+    }
+
+    if (!load_model_named(&scene->chest.lid, "assets/models/chest.obj", "Chest_lid")) {
+       fprintf(stderr, "Failed to load chest lid.\n");
+      return 0;
+    }
+    
     return 1;
 }
 
@@ -80,7 +90,7 @@ void render_scene(const Scene* scene, const Camera* camera, const Light* light) 
     draw_room();
     //draw_test_box();
     draw_table();
-    draw_chest(scene->chest.lid_angle);
+    draw_chest(&scene->chest.body, &scene->chest.lid, scene->chest.lid_angle);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -102,5 +112,26 @@ void render_scene(const Scene* scene, const Camera* camera, const Light* light) 
 
 void destroy_scene(Scene* scene) {
     destroy_model(&scene->torch);
-    destroy_model(&scene->chest.model);
+    destroy_model(&scene->chest.body);
+    destroy_model(&scene->chest.lid);
+}
+
+void update_scene(Scene* scene, const App* app) {
+    if (app->key_e && !app->key_e_prev) {
+        scene->chest.is_open = !scene->chest.is_open;
+    }
+
+    if (scene->chest.is_open && scene->chest.lid_angle < 90.0f) {
+        scene->chest.lid_angle += 2.0f;
+        if (scene->chest.lid_angle > 90.0f) {
+            scene->chest.lid_angle = 90.0f;
+        }
+    }
+
+    if (!scene->chest.is_open && scene->chest.lid_angle > 0.0f) {
+        scene->chest.lid_angle -= 2.0f;
+        if (scene->chest.lid_angle < 0.0f) {
+            scene->chest.lid_angle = 0.0f;
+        }
+    }
 }

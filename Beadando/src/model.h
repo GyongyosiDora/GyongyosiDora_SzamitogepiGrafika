@@ -15,5 +15,6 @@ typedef struct Model {
 int load_model(Model* model, const char* filename);
 void draw_model(const Model* model);
 void destroy_model(Model* model);
+int load_model_named(Model* model, const char* filename, const char* object_name);
 
 #endif

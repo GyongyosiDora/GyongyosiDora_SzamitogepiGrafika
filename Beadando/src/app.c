@@ -40,6 +40,7 @@ int init_app(App* app)
     app->key_s = false;
     app->key_d = false;
     app->key_e = false;
+    app->key_e_prev = false;
 
     app->mouse_dx = 0.0f;
     app->mouse_dy = 0.0f;
@@ -58,6 +59,7 @@ void handle_app_events(App* app)
 
     app->mouse_dx = 0.0f;
     app->mouse_dy = 0.0f;
+    app->key_e_prev = app->key_e;
 
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {

@@ -17,6 +17,7 @@ typedef struct App {
     bool key_s;
     bool key_d;
     bool key_e;
+    bool key_e_prev;
 
     float mouse_dx;
     float mouse_dy;
