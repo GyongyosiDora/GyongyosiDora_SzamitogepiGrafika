@@ -17,6 +17,8 @@ typedef struct Scene {
     Model torch;
     Chest chest;
     unsigned int help_texture;
+    unsigned int wall_texture;
+    unsigned int floor_texture;
 } Scene;
 
 int init_scene(Scene* scene);

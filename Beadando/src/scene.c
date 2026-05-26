@@ -20,6 +20,27 @@ static void set_perspective(void) {
     glFrustum(left, right, bottom, top, near_plane, far_plane);
 }
 
+static unsigned int load_texture(const char* filename) {
+    int w, h, channels;
+    unsigned char* data = stbi_load(filename, &w, &h, &channels, 4);
+    if (!data) {
+        fprintf(stderr, "Failed to load texture: %s\n", filename);
+        return 0;
+    }
+
+    unsigned int tex;
+    glGenTextures(1, &tex);
+    glBindTexture(GL_TEXTURE_2D, tex);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    stbi_image_free(data);
+
+    return tex;
+}
+
 int init_scene(Scene* scene) {
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
@@ -64,18 +85,9 @@ int init_scene(Scene* scene) {
       return 0;
     }
 
-    int w, h, channels;
-    unsigned char* data = stbi_load("assets/textures/menu.png", &w, &h, &channels, 4);
-    if (data) {
-        glGenTextures(1, &scene->help_texture);
-        glBindTexture(GL_TEXTURE_2D, scene->help_texture);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        stbi_image_free(data);
-    } else {
-        fprintf(stderr, "Failed to load menu.png\n");
-    }
+    scene->help_texture  = load_texture("assets/textures/menu.png");
+    scene->wall_texture  = load_texture("assets/textures/wall.jpg");
+    scene->floor_texture = load_texture("assets/textures/floor.jpg");
     
     return 1;
 }
@@ -109,7 +121,7 @@ void render_scene(const Scene* scene, const Camera* camera, const Light* light, 
 
     apply_camera(camera);
 
-    draw_room();
+    draw_room(scene->wall_texture, scene->floor_texture);
     //draw_test_box();
     draw_table();
     draw_chest(&scene->chest.body, &scene->chest.lid, scene->chest.lid_angle);
@@ -164,6 +176,8 @@ void destroy_scene(Scene* scene) {
     destroy_model(&scene->chest.body);
     destroy_model(&scene->chest.lid);
     glDeleteTextures(1, &scene->help_texture);
+    glDeleteTextures(1, &scene->wall_texture);
+    glDeleteTextures(1, &scene->floor_texture);
 }
 
 void update_scene(Scene* scene, const App* app) {

@@ -1,56 +1,64 @@
 #include "draw.h"
 #include <GL/gl.h>
 
-void draw_room(void) {
+void draw_room(unsigned int wall_tex, unsigned int floor_tex) {
+    glEnable(GL_TEXTURE_2D);
+
+    // padló
+    glBindTexture(GL_TEXTURE_2D, floor_tex);
+    glColor3f(1.0f, 1.0f, 1.0f);
     glBegin(GL_QUADS);
 
-    // padló: felfelé néz
     glNormal3f(0.0f, 0.0f, 1.0f);
-    glColor3f(0.13f, 0.13f, 0.13f);
-    glVertex3f(-5.0f, -5.0f, 0.0f);
-    glVertex3f( 5.0f, -5.0f, 0.0f);
-    glVertex3f( 5.0f,  5.0f, 0.0f);
-    glVertex3f(-5.0f,  5.0f, 0.0f);
+    glTexCoord2f(0.0f, 0.0f); glVertex3f(-5.0f, -5.0f, 0.0f);
+    glTexCoord2f(4.0f, 0.0f); glVertex3f( 5.0f, -5.0f, 0.0f);
+    glTexCoord2f(4.0f, 4.0f); glVertex3f( 5.0f,  5.0f, 0.0f);
+    glTexCoord2f(0.0f, 4.0f); glVertex3f(-5.0f,  5.0f, 0.0f);
+    glEnd();
 
-    // plafon: lefelé néz
-    glNormal3f(0.0f, 0.0f, -1.0f);
+    // falak
+    glBindTexture(GL_TEXTURE_2D, wall_tex);
+    glBegin(GL_QUADS);
+
+    // hátsó fal
+    glNormal3f(0.0f, -1.0f, 0.0f);
+    glTexCoord2f(0.0f, 0.0f); glVertex3f(-5.0f, 5.0f, 0.0f);
+    glTexCoord2f(3.0f, 0.0f); glVertex3f( 5.0f, 5.0f, 0.0f);
+    glTexCoord2f(3.0f, 1.5f); glVertex3f( 5.0f, 5.0f, 3.0f);
+    glTexCoord2f(0.0f, 1.5f); glVertex3f(-5.0f, 5.0f, 3.0f);
+
+    // első fal
+    glNormal3f(0.0f, 1.0f, 0.0f);
+    glTexCoord2f(0.0f, 0.0f); glVertex3f(-5.0f, -5.0f, 0.0f);
+    glTexCoord2f(0.0f, 1.5f); glVertex3f(-5.0f, -5.0f, 3.0f);
+    glTexCoord2f(3.0f, 1.5f); glVertex3f( 5.0f, -5.0f, 3.0f);
+    glTexCoord2f(3.0f, 0.0f); glVertex3f( 5.0f, -5.0f, 0.0f);
+
+    // bal fal
+    glNormal3f(1.0f, 0.0f, 0.0f);
+    glTexCoord2f(0.0f, 0.0f); glVertex3f(-5.0f, -5.0f, 0.0f);
+    glTexCoord2f(3.0f, 0.0f); glVertex3f(-5.0f,  5.0f, 0.0f);
+    glTexCoord2f(3.0f, 1.5f); glVertex3f(-5.0f,  5.0f, 3.0f);
+    glTexCoord2f(0.0f, 1.5f); glVertex3f(-5.0f, -5.0f, 3.0f);
+
+    // jobb fal
+    glNormal3f(-1.0f, 0.0f, 0.0f);
+    glTexCoord2f(0.0f, 0.0f); glVertex3f(5.0f, -5.0f, 0.0f);
+    glTexCoord2f(0.0f, 1.5f); glVertex3f(5.0f, -5.0f, 3.0f);
+    glTexCoord2f(3.0f, 1.5f); glVertex3f(5.0f,  5.0f, 3.0f);
+    glTexCoord2f(3.0f, 0.0f); glVertex3f(5.0f,  5.0f, 0.0f);
+
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+
+    // plafon - textúra nélkül
     glColor3f(0.18f, 0.16f, 0.15f);
+    glBegin(GL_QUADS);
+    glNormal3f(0.0f, 0.0f, -1.0f);
     glVertex3f(-5.0f, -5.0f, 3.0f);
     glVertex3f(-5.0f,  5.0f, 3.0f);
     glVertex3f( 5.0f,  5.0f, 3.0f);
     glVertex3f( 5.0f, -5.0f, 3.0f);
-
-    // hátsó fal: befelé, negatív y irányba
-    glNormal3f(0.0f, -1.0f, 0.0f);
-    glColor3f(0.32f, 0.30f, 0.28f);
-    glVertex3f(-5.0f, 5.0f, 0.0f);
-    glVertex3f( 5.0f, 5.0f, 0.0f);
-    glVertex3f( 5.0f, 5.0f, 3.0f);
-    glVertex3f(-5.0f, 5.0f, 3.0f);
-
-    // első fal: befelé, pozitív y irányba
-    glNormal3f(0.0f, 1.0f, 0.0f);
-    glColor3f(0.30f, 0.28f, 0.26f);
-    glVertex3f(-5.0f, -5.0f, 0.0f);
-    glVertex3f(-5.0f, -5.0f, 3.0f);
-    glVertex3f( 5.0f, -5.0f, 3.0f);
-    glVertex3f( 5.0f, -5.0f, 0.0f);
-
-    // bal fal: befelé, pozitív x irányba
-    glNormal3f(1.0f, 0.0f, 0.0f);
-    glColor3f(0.28f, 0.26f, 0.24f);
-    glVertex3f(-5.0f, -5.0f, 0.0f);
-    glVertex3f(-5.0f,  5.0f, 0.0f);
-    glVertex3f(-5.0f,  5.0f, 3.0f);
-    glVertex3f(-5.0f, -5.0f, 3.0f);
-
-    // jobb fal: befelé, negatív x irányba
-    glNormal3f(-1.0f, 0.0f, 0.0f);
-    glColor3f(0.28f, 0.26f, 0.24f);
-    glVertex3f(5.0f, -5.0f, 0.0f);
-    glVertex3f(5.0f, -5.0f, 3.0f);
-    glVertex3f(5.0f,  5.0f, 3.0f);
-    glVertex3f(5.0f,  5.0f, 0.0f);
 
     glEnd();
 }

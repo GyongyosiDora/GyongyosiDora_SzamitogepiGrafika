@@ -4,7 +4,7 @@
 #include "model.h"
 #include "light.h"
 
-void draw_room(void);
+void draw_room(unsigned int wall_tex, unsigned int floor_tex);
 void draw_test_box(void);
 
 // modellek
