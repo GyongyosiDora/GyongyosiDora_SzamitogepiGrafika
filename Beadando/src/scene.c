@@ -21,6 +21,7 @@ static void set_perspective(void) {
 }
 
 static unsigned int load_texture(const char* filename) {
+    stbi_set_flip_vertically_on_load(1);
     int w, h, channels;
     unsigned char* data = stbi_load(filename, &w, &h, &channels, 4);
     if (!data) {
@@ -88,6 +89,8 @@ int init_scene(Scene* scene) {
     scene->help_texture  = load_texture("assets/textures/menu.png");
     scene->wall_texture  = load_texture("assets/textures/wall.jpg");
     scene->floor_texture = load_texture("assets/textures/floor.jpg");
+    scene->chest_body_texture = load_texture("assets/textures/T_ChestDown_BC.PNG");
+    scene->chest_lid_texture  = load_texture("assets/textures/T_ChestUp_BC.PNG");
     
     return 1;
 }
@@ -124,7 +127,7 @@ void render_scene(const Scene* scene, const Camera* camera, const Light* light, 
     draw_room(scene->wall_texture, scene->floor_texture);
     //draw_test_box();
     draw_table();
-    draw_chest(&scene->chest.body, &scene->chest.lid, scene->chest.lid_angle);
+    draw_chest(&scene->chest.body, &scene->chest.lid, scene->chest.lid_angle, scene->chest_body_texture, scene->chest_lid_texture);
     draw_torch(&scene->torch, light);
 
     if (app->show_help) {
@@ -178,6 +181,8 @@ void destroy_scene(Scene* scene) {
     glDeleteTextures(1, &scene->help_texture);
     glDeleteTextures(1, &scene->wall_texture);
     glDeleteTextures(1, &scene->floor_texture);
+    glDeleteTextures(1, &scene->chest_body_texture);
+    glDeleteTextures(1, &scene->chest_lid_texture);
 }
 
 void update_scene(Scene* scene, const App* app) {
@@ -186,14 +191,14 @@ void update_scene(Scene* scene, const App* app) {
     }
 
     if (scene->chest.is_open && scene->chest.lid_angle < 90.0f) {
-        scene->chest.lid_angle += 2.0f;
+        scene->chest.lid_angle += 0.5f;
         if (scene->chest.lid_angle > 90.0f) {
             scene->chest.lid_angle = 90.0f;
         }
     }
 
     if (!scene->chest.is_open && scene->chest.lid_angle > 0.0f) {
-        scene->chest.lid_angle -= 2.0f;
+        scene->chest.lid_angle -= 0.5f;
         if (scene->chest.lid_angle < 0.0f) {
             scene->chest.lid_angle = 0.0f;
         }

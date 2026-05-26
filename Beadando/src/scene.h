@@ -19,6 +19,8 @@ typedef struct Scene {
     unsigned int help_texture;
     unsigned int wall_texture;
     unsigned int floor_texture;
+    unsigned int chest_body_texture;
+    unsigned int chest_lid_texture;
 } Scene;
 
 int init_scene(Scene* scene);

@@ -63,57 +63,6 @@ void draw_room(unsigned int wall_tex, unsigned int floor_tex) {
     glEnd();
 }
 
-// fény teszteléshez
-void draw_test_box(void) {
-    glPushMatrix();
-
-    glTranslatef(0.0f, 0.0f, 0.6f);
-    glScalef(1.2f, 0.8f, 0.6f);
-
-    glBegin(GL_QUADS);
-
-    glNormal3f(0.0f, 0.0f, 1.0f);
-    glColor3f(0.45f, 0.25f, 0.12f);
-    glVertex3f(-1.0f, -1.0f,  1.0f);
-    glVertex3f( 1.0f, -1.0f,  1.0f);
-    glVertex3f( 1.0f,  1.0f,  1.0f);
-    glVertex3f(-1.0f,  1.0f,  1.0f);
-
-    glNormal3f(0.0f, 0.0f, -1.0f);
-    glVertex3f(-1.0f, -1.0f, -1.0f);
-    glVertex3f(-1.0f,  1.0f, -1.0f);
-    glVertex3f( 1.0f,  1.0f, -1.0f);
-    glVertex3f( 1.0f, -1.0f, -1.0f);
-
-    glNormal3f(0.0f, 1.0f, 0.0f);
-    glVertex3f(-1.0f, 1.0f, -1.0f);
-    glVertex3f(-1.0f, 1.0f,  1.0f);
-    glVertex3f( 1.0f, 1.0f,  1.0f);
-    glVertex3f( 1.0f, 1.0f, -1.0f);
-
-    glNormal3f(0.0f, -1.0f, 0.0f);
-    glVertex3f(-1.0f, -1.0f, -1.0f);
-    glVertex3f( 1.0f, -1.0f, -1.0f);
-    glVertex3f( 1.0f, -1.0f,  1.0f);
-    glVertex3f(-1.0f, -1.0f,  1.0f);
-
-    glNormal3f(1.0f, 0.0f, 0.0f);
-    glVertex3f(1.0f, -1.0f, -1.0f);
-    glVertex3f(1.0f,  1.0f, -1.0f);
-    glVertex3f(1.0f,  1.0f,  1.0f);
-    glVertex3f(1.0f, -1.0f,  1.0f);
-
-    glNormal3f(-1.0f, 0.0f, 0.0f);
-    glVertex3f(-1.0f, -1.0f, -1.0f);
-    glVertex3f(-1.0f, -1.0f,  1.0f);
-    glVertex3f(-1.0f,  1.0f,  1.0f);
-    glVertex3f(-1.0f,  1.0f, -1.0f);
-
-    glEnd();
-
-    glPopMatrix();
-}
-
 // fáklya
 void draw_torch(const Model* model, const Light* light) {
     glMatrixMode(GL_MODELVIEW);
@@ -268,7 +217,7 @@ void draw_table(void)
 }
 
 // láda
-void draw_chest(const Model* body, const Model* lid, float lid_angle)
+void draw_chest(const Model* body, const Model* lid, float lid_angle, unsigned int body_tex, unsigned int lid_tex)
 {
     glPushMatrix();
 
@@ -276,7 +225,9 @@ void draw_chest(const Model* body, const Model* lid, float lid_angle)
     glScalef(0.25f, 0.25f, 0.25f);
     glRotatef(90.0f, 1.0f, 0.0f, 0.0f);  // OBJ Y-fel → GL Z-fel
 
-    glColor3f(0.45f, 0.25f, 0.12f);
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, body_tex);
+    glColor3f(1.0f, 1.0f, 1.0f);
     draw_model(body);
 
     // fedél forgatása a zsanér körül (OBJ Y=1.738 → GL Z=1.738)
@@ -284,8 +235,10 @@ void draw_chest(const Model* body, const Model* lid, float lid_angle)
     glRotatef(-lid_angle, 1.0f, 0.0f, 0.0f);
     glTranslatef(0.0f, -1.738f, 1.236f);
 
-    glColor3f(0.38f, 0.20f, 0.09f);
+    glBindTexture(GL_TEXTURE_2D, lid_tex);
+
     draw_model(lid);
+    glDisable(GL_TEXTURE_2D);
 
     glPopMatrix();
 }
