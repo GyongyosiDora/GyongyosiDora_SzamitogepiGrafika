@@ -41,6 +41,9 @@ int init_app(App* app)
     app->key_d = false;
     app->key_e = false;
     app->key_e_prev = false;
+    app->key_f1 = false;
+    app->key_f1_prev = false;
+    app->show_help = false;
 
     app->mouse_dx = 0.0f;
     app->mouse_dy = 0.0f;
@@ -60,6 +63,7 @@ void handle_app_events(App* app)
     app->mouse_dx = 0.0f;
     app->mouse_dy = 0.0f;
     app->key_e_prev = app->key_e;
+    app->key_f1_prev = app->key_f1;
 
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
@@ -98,6 +102,10 @@ void handle_app_events(App* app)
             if (event.key.keysym.sym == SDLK_MINUS || event.key.keysym.sym == SDLK_KP_MINUS) {
                 app->key_minus = true;
             }
+
+            if (event.key.keysym.sym == SDLK_F1) {
+                app->key_f1 = true;
+            }
         }
 
         if (event.type == SDL_KEYUP) {
@@ -128,12 +136,20 @@ void handle_app_events(App* app)
             if (event.key.keysym.sym == SDLK_MINUS || event.key.keysym.sym == SDLK_KP_MINUS) {
                 app->key_minus = false;
             }
+
+            if (event.key.keysym.sym == SDLK_F1) {
+                app->key_f1 = false;
+            }
         }
 
         if (event.type == SDL_MOUSEMOTION) {
             app->mouse_dx += (float)event.motion.xrel;
             app->mouse_dy += (float)event.motion.yrel;
         }
+    }
+
+    if (app->key_f1 && !app->key_f1_prev) {
+        app->show_help = !app->show_help;
     }
 }
 

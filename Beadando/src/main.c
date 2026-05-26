@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
         update_camera(&camera, &app);
         update_light(&light, &app);
         update_scene(&scene, &app);
-        render_scene(&scene, &camera, &light);
+        render_scene(&scene, &camera, &light, &app);
         SDL_GL_SwapWindow(app.window);
     }
 

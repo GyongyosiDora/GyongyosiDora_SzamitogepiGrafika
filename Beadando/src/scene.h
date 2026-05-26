@@ -16,10 +16,11 @@ typedef struct {
 typedef struct Scene {
     Model torch;
     Chest chest;
+    unsigned int help_texture;
 } Scene;
 
 int init_scene(Scene* scene);
-void render_scene(const Scene* scene, const Camera* camera, const Light* light);
+void render_scene(const Scene* scene, const Camera* camera, const Light* light, const App* app);
 void destroy_scene(Scene* scene);
 void update_scene(Scene* scene, const App* app);
 
