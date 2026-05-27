@@ -86,6 +86,9 @@ void update_camera(Camera* camera, const App* app) {
     float right_x = cosf(angle - 90.0f * DEG_TO_RAD);
     float right_y = sinf(angle - 90.0f * DEG_TO_RAD);
 
+    float old_x = camera->x;
+    float old_y = camera->y;
+
     if (app->key_w) {
         camera->x += forward_x * speed;
         camera->y += forward_y * speed;
@@ -120,6 +123,21 @@ void update_camera(Camera* camera, const App* app) {
 
     if (camera->y > 4.7f) {
         camera->y = 4.7f;
+    }
+
+    // asztal ütközés
+    float r = 0.3f;
+    float tx1 = 1.2f - r;
+    float tx2 = 2.8f + r;
+    float ty1 = 1.4f - r;
+    float ty2 = 2.6f + r;
+
+    if (camera->x > tx1 && camera->x < tx2 && camera->y > ty1 && camera->y < ty2) {
+        camera->x = old_x;
+
+        if (camera->x > tx1 && camera->x < tx2 && camera->y > ty1 && camera->y < ty2) {
+            camera->y = old_y;
+        }
     }
 }
 
