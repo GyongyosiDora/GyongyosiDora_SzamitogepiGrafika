@@ -155,10 +155,10 @@ void render_scene(const Scene* scene, const Camera* camera, const Light* light, 
         float y = (WINDOW_HEIGHT - img_h) / 2.0f;
 
         glBegin(GL_QUADS);
-        glTexCoord2f(0, 0); glVertex2f(x, y);
-        glTexCoord2f(1, 0); glVertex2f(x + img_w, y);
-        glTexCoord2f(1, 1); glVertex2f(x + img_w, y + img_h);
-        glTexCoord2f(0, 1); glVertex2f(x, y + img_h);
+        glTexCoord2f(0, 1); glVertex2f(x, y);
+        glTexCoord2f(1, 1); glVertex2f(x + img_w, y);
+        glTexCoord2f(1, 0); glVertex2f(x + img_w, y + img_h);
+        glTexCoord2f(0, 0); glVertex2f(x, y + img_h);
         glEnd();
 
         glDisable(GL_BLEND);
